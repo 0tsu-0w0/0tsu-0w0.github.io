@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article>
+    <header>
+      <p class="small muted">
+        <FormattedDate date={post.data.pubDate} />
+        {
+          post.data.updatedDate && (
+            <>
+              {' · 更新 '}
+              <FormattedDate date={post.data.updatedDate} />
+            </>
+          )
+        }
+      </p>
+      <h1>{post.data.title}</h1>
+      {
+        post.data.tags.length > 0 && (
+          <ul class="tags">
+            {post.data.tags.map((tag) => (
+              <li class="tag">{tag}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="body">
+      <Content />
+    </div>
+  </article>
+
+  <p class="back"><a href="/blog/">← 記事一覧へ</a></p>
+</BaseLayout>
+
+<style>
+  header {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header p {
+    margin: 0 0 0.35rem;
+  }
+
+  header h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .body :global(h2) {
+    margin-top: 2.5rem;
+  }
+
+  .body :global(ul),
+  .body :global(ol) {
+    padding-left: 1.4rem;
+  }
+
+  .body :global(li) {
+    margin-bottom: 0.35rem;
+  }
+
+  .back {
+    margin-top: 3rem;
+    font-size: 0.95rem;
+  }
+</style>

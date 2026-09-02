@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostLink from '../components/PostLink.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { site } from '../site.config';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const works = (await getCollection('works', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.year - a.data.year)
+  .slice(0, 2);
+---
+
+<BaseLayout>
+  <section class="intro">
+    <h1>{site.title}</h1>
+    <p class="lede">{site.tagline}</p>
+    {site.bio.map((paragraph) => <p>{paragraph}</p>)}
+
+    <ul class="links">
+      {
+        site.links.map((link) => (
+          <li>
+            <a href={link.href} rel="me noopener noreferrer">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <ul class="tags">
+      {site.skills.map((skill) => <li class="tag">{skill}</li>)}
+    </ul>
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section>
+        <div class="section-head">
+          <h2>最近の記事</h2>
+          <a class="small" href="/blog/">
+            すべて見る →
+          </a>
+        </div>
+        {posts.map((post) => (
+          <PostLink
+            id={post.id}
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+          />
+        ))}
+      </section>
+    )
+  }
+
+  {
+    works.length > 0 && (
+      <section>
+        <div class="section-head">
+          <h2>制作物</h2>
+          <a class="small" href="/works/">
+            すべて見る →
+          </a>
+        </div>
+        <div class="work-grid">
+          {works.map((work) => (
+            <WorkCard
+              title={work.data.title}
+              description={work.data.description}
+              year={work.data.year}
+              role={work.data.role}
+              tech={work.data.tech}
+              url={work.data.url}
+              repo={work.data.repo}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .intro h1 {
+    margin-top: 0;
+  }
+
+  .intro .lede {
+    margin-bottom: 1.75rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    font-size: 0.95rem;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .section-head h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .work-grid {
+    display: grid;
+    gap: 1rem;
+  }
+</style>
