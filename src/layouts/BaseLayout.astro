@@ -1,37 +1,25 @@
 ---
+import BaseHead from '../components/BaseHead.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { site, nav } from '../site.config';
-import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const { title, description = site.description } = Astro.props;
-const pageTitle = title ? `${title} | ${site.title}` : site.title;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'http://localhost:4321');
+const { title, description } = Astro.props;
 const path = Astro.url.pathname;
 ---
 
 <html lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{pageTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="generator" content={Astro.generator} />
+    <BaseHead title={title} description={description} />
   </head>
   <body>
     <header class="site-header">
       <div class="wrap header-inner">
-        <a class="brand" href="/">{site.title}</a>
+        <a class="brand" href="/">{site.name}</a>
         <nav aria-label="メインナビゲーション">
           <ul>
             {
@@ -52,15 +40,16 @@ const path = Astro.url.pathname;
       </div>
     </header>
 
+    <SocialLinks variant="rail" />
+
     <main class="wrap">
       <slot />
     </main>
 
     <footer class="site-footer">
-      <div class="wrap">
-        <p class="small muted">
-          © {new Date().getFullYear()} {site.title}
-        </p>
+      <div class="wrap footer-inner">
+        <SocialLinks variant="row" />
+        <p class="small muted">© {new Date().getFullYear()} {site.name}</p>
       </div>
     </footer>
   </body>
@@ -86,24 +75,36 @@ const path = Astro.url.pathname;
   }
 
   .brand {
-    font-weight: 650;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
     color: var(--text);
     text-decoration: none;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.02em;
   }
 
+  /* 参考サイトのように、項目の間を細い縦線で区切る */
   nav ul {
     display: flex;
-    gap: 1.25rem;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
+  nav li + li {
+    border-left: 1px solid var(--border);
+  }
+
   nav a {
+    display: block;
+    padding-inline: 1rem;
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.92rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+  }
+
+  nav li:last-child a {
+    padding-right: 0;
   }
 
   nav a:hover,
@@ -120,10 +121,26 @@ const path = Astro.url.pathname;
 
   .site-footer {
     border-top: 1px solid var(--border);
-    padding-block: 1.5rem 2.5rem;
+    padding-block: 2rem 2.5rem;
+    margin-top: 4rem;
   }
 
-  .site-footer p {
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-inner p {
     margin: 0;
+  }
+
+  @media (min-width: 1100px) {
+    /* 右端の固定アイコンと重複するのでフッターの横並びは隠す */
+    .footer-inner :global(.socials.row) {
+      display: none;
+    }
   }
 </style>

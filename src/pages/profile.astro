@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, profile } from '../site.config';
+---
+
+<BaseLayout title="Profile" description={`${site.name} のプロフィールです。`}>
+  <h1>Profile</h1>
+  <p class="lede">{site.tagline}</p>
+
+  {profile.bio.map((paragraph) => <p>{paragraph}</p>)}
+
+  <h2>Skills</h2>
+  <ul class="tags">
+    {profile.skills.map((skill) => <li class="tag">{skill}</li>)}
+  </ul>
+
+  <h2>History</h2>
+  <dl class="history">
+    {
+      profile.history.map((item) => (
+        <div class="row">
+          <dt>{item.year}</dt>
+          <dd>{item.text}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</BaseLayout>
+
+<style>
+  .history {
+    margin: 1rem 0 0;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 0.5rem 1.25rem;
+    padding-block: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .row:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  dt {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  @media (max-width: 30rem) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+</style>

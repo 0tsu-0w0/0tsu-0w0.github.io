@@ -1,6 +1,15 @@
 # 個人サイト
 
-[Astro](https://astro.build) で作った静的サイトです。プロフィール（トップ）、ブログ、制作物一覧の 3 つで構成しています。
+[Astro](https://astro.build) で作った静的サイトです。トップは litlink のようなリンクまとめページで、
+ブログとプロフィールを別ページとして持っています。
+
+- `/` — リンクまとめ（アイコン、名前、SNS、リンクボタン）
+- `/blog/` — 記事一覧、`/blog/<ファイル名>/` — 記事本文
+- `/profile/` — 自己紹介、スキル、経歴
+
+レイアウトは [akakura.wixsite.com/mysite](https://akakura.wixsite.com/mysite) の構成を参考にしています
+（中央寄せの円形アイコン、区切り線で区切った中央ナビ、広い画面で右端に固定される円形 SNS アイコン）。
+配色はこのサイト独自のものです。
 
 ## 使い方
 
@@ -14,16 +23,26 @@ npm run preview # ビルド結果を確認
 ## ディレクトリ構成
 
 ```
+public/
+└── avatar.svg            トップの円形アイコン（差し替え用プレースホルダー）
 src/
-├── site.config.ts        名前・肩書き・自己紹介・SNS リンク（まずここを編集）
-├── content.config.ts     ブログと制作物のフロントマター定義（スキーマ）
-├── content/
-│   ├── blog/             ブログ記事（Markdown）
-│   └── works/            制作物（Markdown）
+├── site.config.ts        名前・リンクボタン・SNS・経歴（まずここを編集）
+├── content.config.ts     ブログのフロントマター定義（スキーマ）
+├── content/blog/         ブログ記事（Markdown）
 ├── layouts/
-│   └── BaseLayout.astro  ヘッダー・フッター・<head> の共通部分
-├── components/           一覧のカードや日付表示など
-├── pages/                URL と 1 対 1 で対応するページ
+│   └── BaseLayout.astro  下層ページ共通のヘッダー・フッター
+├── components/
+│   ├── BaseHead.astro    <head> の中身（メタタグ、OGP）
+│   ├── Icon.astro        SNS アイコンの SVG
+│   ├── SocialLinks.astro 円形 SNS アイコンの並び
+│   ├── PostLink.astro    記事一覧の 1 件分
+│   └── FormattedDate.astro
+├── pages/
+│   ├── index.astro       リンクまとめページ（独立したレイアウト）
+│   ├── profile.astro
+│   ├── blog/index.astro
+│   ├── blog/[...slug].astro
+│   └── 404.astro
 └── styles/global.css     配色（CSS 変数）と共通スタイル
 ```
 
@@ -31,11 +50,22 @@ src/
 
 | やりたいこと | 触るファイル |
 | --- | --- |
-| 名前・自己紹介・SNS リンクを変える | `src/site.config.ts` |
-| 配色を変える | `src/styles/global.css` の `:root` |
+| 名前・肩書きを変える | `src/site.config.ts` の `site` |
+| トップのリンクボタンを増減する | `src/site.config.ts` の `linkButtons` |
+| SNS アイコンを増減する | `src/site.config.ts` の `socials` |
+| プロフィールの本文・経歴を変える | `src/site.config.ts` の `profile` |
 | ナビゲーションの項目を変える | `src/site.config.ts` の `nav` |
+| 配色を変える | `src/styles/global.css` の `:root` |
 | 記事を追加する | `src/content/blog/` に `.md` を追加 |
-| 制作物を追加する | `src/content/works/` に `.md` を追加 |
+
+## アイコン画像の差し替え
+
+`public/avatar.svg` はプレースホルダーです。写真を `public/` に置いて、
+`src/site.config.ts` の `avatar` を `'/avatar.jpg'` のように変えてください。
+`avatar: null` にすると、名前の頭文字が代わりに表示されます。
+
+新しい SNS を追加したいときは、`src/components/Icon.astro` の `paths` に
+24×24 の viewBox で SVG のパスを足してから、`socials` でその名前を指定します。
 
 ## 記事の追加
 
@@ -55,23 +85,6 @@ draft: false
 ```
 
 `updatedDate`（更新日）は任意です。`draft: true` にすると公開されません。
-
-## 制作物の追加
-
-`src/content/works/` に Markdown ファイルを置きます。本文は今は使っていないので、
-フロントマターだけで構いません。
-
-```markdown
----
-title: '作品名'
-description: '説明'
-year: 2026
-role: '設計・実装'
-tech: ['TypeScript', 'React']
-url: 'https://example.com'
-repo: 'https://github.com/you/repo'
----
-```
 
 ## 公開する前に
 

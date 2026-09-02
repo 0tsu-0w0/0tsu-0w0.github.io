@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { socials } from '../site.config';
+
+interface Props {
+  /** 'row' はページ内に横並び、'rail' は画面右端に縦並びで固定 */
+  variant?: 'row' | 'rail';
+}
+
+const { variant = 'row' } = Astro.props;
+---
+
+<ul class:list={['socials', variant]} aria-label="SNS リンク">
+  {
+    socials.map((s) => (
+      <li>
+        <a
+          href={s.href}
+          aria-label={s.label}
+          title={s.label}
+          rel="me noopener noreferrer"
+          target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+        >
+          <Icon name={s.icon} />
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .socials {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.6rem;
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .socials a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .row {
+    justify-content: center;
+  }
+
+  /* 参考サイトと同じく、広い画面では右端に縦一列で固定する。
+     本文の外側に十分な余白がある幅でだけ出す。 */
+  .rail {
+    display: none;
+  }
+
+  @media (min-width: 1100px) {
+    .rail {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 50%;
+      right: 1.75rem;
+      transform: translateY(-50%);
+      z-index: 5;
+    }
+  }
+</style>
