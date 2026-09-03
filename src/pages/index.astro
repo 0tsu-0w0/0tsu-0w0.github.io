@@ -14,14 +14,20 @@ const initial = site.name.trim().charAt(0);
     <main>
       <header class="profile">
         {
-          site.avatar ? (
-            <img class="avatar" src={site.avatar} alt="" width="120" height="120" />
-          ) : (
-            <span class="avatar avatar-fallback" aria-hidden="true">
-              {initial}
-            </span>
+          site.avatar && (
+            <img
+              class="avatar"
+              src={site.avatar}
+              alt=""
+              width="120"
+              height="120"
+              onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+            />
           )
         }
+        <span class="avatar avatar-fallback" aria-hidden="true" hidden={!!site.avatar}>
+          {initial}
+        </span>
         <h1>{site.name}</h1>
         <p class="tagline">{site.tagline}</p>
       </header>

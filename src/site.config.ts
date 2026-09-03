@@ -4,11 +4,11 @@
  */
 export const site = {
   /** サイト名（<title> の末尾に使われます） */
-  title: 'Your Name',
+  title: 'おつ0w0',
   /** トップに大きく出る表示名 */
-  name: 'Your Name',
+  name: 'おつ0w0',
   /** 肩書き・一行紹介 */
-  tagline: 'Web Developer / Tokyo',
+  tagline: 'ここに一行の紹介文',
   /** <meta name="description"> の既定値 */
   description: 'リンクまとめ、ブログ、プロフィールを置いている個人サイトです。',
   /**
@@ -16,7 +16,7 @@ export const site = {
    * '/avatar.jpg' のように指定してください。
    * null にすると name の頭文字が代わりに表示されます。
    */
-  avatar: '/avatar.svg',
+  avatar: '/avatar.png',
 } as const;
 
 /**
@@ -38,21 +38,21 @@ export const linkButtons = [
     internal: true,
   },
   {
-    label: 'GitHub',
-    note: 'コードとつくったもの',
-    href: 'https://github.com/your-account',
+    label: 'pixiv',
+    note: 'イラストを投稿しています',
+    href: 'https://www.pixiv.net/users/110858681',
     internal: false,
   },
   {
     label: 'X',
     note: '日々の記録',
-    href: 'https://x.com/your-account',
+    href: 'https://twitter.com/_0tmz4_09',
     internal: false,
   },
   {
-    label: 'Contact',
-    note: 'お問い合わせはメールで',
-    href: 'mailto:you@example.com',
+    label: 'GitHub',
+    note: 'コードとつくったもの',
+    href: 'https://github.com/0tsu-0w0',
     internal: false,
   },
 ];
@@ -63,10 +63,9 @@ export const linkButtons = [
  * （増やしたいときは src/components/Icon.astro に SVG を追加）。
  */
 export const socials = [
-  { icon: 'x', label: 'X', href: 'https://x.com/your-account' },
-  { icon: 'instagram', label: 'Instagram', href: 'https://instagram.com/your-account' },
-  { icon: 'github', label: 'GitHub', href: 'https://github.com/your-account' },
-  { icon: 'mail', label: 'Email', href: 'mailto:you@example.com' },
+  { icon: 'x', label: 'X', href: 'https://twitter.com/_0tmz4_09' },
+  { icon: 'pixiv', label: 'pixiv', href: 'https://www.pixiv.net/users/110858681' },
+  { icon: 'github', label: 'GitHub', href: 'https://github.com/0tsu-0w0' },
 ] as const;
 
 /** 下層ページのヘッダーに並ぶナビゲーション */
