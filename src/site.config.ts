@@ -94,4 +94,12 @@ export const profile = {
     { label: '使用ツール', value: 'CLIP STUDIO PAINT（補助として Affinity、Procreate）' },
     { label: '使用デバイス', value: 'iPad' },
   ],
+  /**
+   * 経歴。「上記」のような前を受ける書き方をするので、古いものを上に並べます。
+   * 空配列にすると History の見出しごと表示されません。
+   */
+  history: [
+    { year: '2023/04', text: '某大学工学部化学科入学' },
+    { year: '現在', text: '上記大学に在学' },
+  ],
 };

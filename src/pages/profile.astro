@@ -9,7 +9,7 @@ import { site, profile } from '../site.config';
 
   {profile.bio.map((paragraph) => <p>{paragraph}</p>)}
 
-  <dl class="details">
+  <dl class="rows">
     {
       profile.details.map((item) => (
         <div class="row">
@@ -19,11 +19,31 @@ import { site, profile } from '../site.config';
       ))
     }
   </dl>
+
+  {
+    profile.history.length > 0 && (
+      <>
+        <h2>History</h2>
+        <dl class="rows">
+          {profile.history.map((item) => (
+            <div class="row">
+              <dt>{item.year}</dt>
+              <dd>{item.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </>
+    )
+  }
 </BaseLayout>
 
 <style>
-  .details {
+  .rows {
     margin: 2.5rem 0 0;
+  }
+
+  h2 + .rows {
+    margin-top: 1rem;
   }
 
   .row {
