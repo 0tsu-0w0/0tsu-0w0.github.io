@@ -57,6 +57,12 @@ export const linkButtons = [
     href: 'https://github.com/0tsu-0w0',
     internal: false,
   },
+  {
+    label: 'Contact',
+    note: 'ご連絡はメールで',
+    href: 'mailto:otsu.sapphire09@gmail.com',
+    internal: false,
+  },
 ];
 
 /**
@@ -68,6 +74,7 @@ export const socials = [
   { icon: 'x', label: 'X', href: 'https://twitter.com/_0tmz4_09' },
   { icon: 'pixiv', label: 'pixiv', href: 'https://www.pixiv.net/users/110858681' },
   { icon: 'github', label: 'GitHub', href: 'https://github.com/0tsu-0w0' },
+  { icon: 'mail', label: 'Email', href: 'mailto:otsu.sapphire09@gmail.com' },
 ] as const;
 
 /** 下層ページのヘッダーに並ぶナビゲーション */
