@@ -8,7 +8,7 @@ export const site = {
   /** トップに大きく出る表示名 */
   name: 'おつ0w0',
   /** 肩書き・一行紹介 */
-  tagline: 'ここに一行の紹介文',
+  tagline: '関東のどこかにいる化学徒',
   /** <meta name="description"> の既定値 */
   description: 'リンクまとめ、ブログ、プロフィールを置いている個人サイトです。',
   /**
