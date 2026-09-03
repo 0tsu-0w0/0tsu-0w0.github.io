@@ -57,7 +57,9 @@ const initial = site.name.trim().charAt(0);
     </main>
 
     <footer>
-      <p class="small muted">© {new Date().getFullYear()} {site.name}</p>
+      <p class="small muted">
+        © <span data-current-year>{new Date().getFullYear()}</span> {site.name}
+      </p>
     </footer>
   </body>
 </html>

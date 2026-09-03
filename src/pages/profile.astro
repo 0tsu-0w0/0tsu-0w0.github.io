@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site, profile } from '../site.config';
+
+const currentYear = new Date().getFullYear();
 ---
 
 <BaseLayout title="Profile" description={`${site.name} のプロフィールです。`}>
@@ -27,7 +29,11 @@ import { site, profile } from '../site.config';
         <dl class="rows">
           {profile.history.map((item) => (
             <div class="row">
-              <dt>{item.year}</dt>
+              {item.current ? (
+                <dt data-current-year>{currentYear}</dt>
+              ) : (
+                <dt>{item.year}</dt>
+              )}
               <dd>{item.text}</dd>
             </div>
           ))}

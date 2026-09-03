@@ -24,3 +24,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'http://localhost:43
 <meta property="og:url" content={canonical} />
 <meta name="twitter:card" content="summary" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- [data-current-year] の中身を閲覧時の年で置き換える。
+     静的サイトなのでビルド時の年が埋め込まれるが、年をまたいでも古いままに
+     ならないよう、表示のたびに上書きする。 -->
+<script>
+  const year = String(new Date().getFullYear());
+  for (const el of document.querySelectorAll('[data-current-year]')) {
+    el.textContent = year;
+  }
+</script>

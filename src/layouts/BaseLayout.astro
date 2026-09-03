@@ -49,7 +49,9 @@ const path = Astro.url.pathname;
     <footer class="site-footer">
       <div class="wrap footer-inner">
         <SocialLinks variant="row" />
-        <p class="small muted">© {new Date().getFullYear()} {site.name}</p>
+        <p class="small muted">
+          © <span data-current-year>{new Date().getFullYear()}</span> {site.name}
+        </p>
       </div>
     </footer>
   </body>
