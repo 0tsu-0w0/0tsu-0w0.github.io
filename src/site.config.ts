@@ -18,7 +18,7 @@ export const site = {
    * '/avatar.jpg' のように指定してください。
    * null にすると name の頭文字が代わりに表示されます。
    */
-  avatar: '/avatar.png',
+  avatar: '/avatar.jpg',
 } as const;
 
 /**
