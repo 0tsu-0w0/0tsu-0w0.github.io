@@ -86,15 +86,12 @@ export const nav = [
 
 /** Profile ページの中身 */
 export const profile = {
-  bio: [
-    'はじめまして。ここに自己紹介を書きます。どんなことをしている人なのか、何に興味があるのかを 2〜3 段落でまとめると読みやすくなります。',
-    '普段は Web アプリケーションの設計と実装をしています。最近は TypeScript と静的サイト生成まわりを触ることが多いです。',
-  ],
-  skills: ['TypeScript', 'Astro', 'React', 'Node.js', 'PostgreSQL', 'CSS'],
-  /** 経歴。新しいものを上に */
-  history: [
-    { year: '2024 —', text: 'フリーランスとして Web 開発を請け負う' },
-    { year: '2021 — 2024', text: '事業会社で自社サービスの開発に従事' },
-    { year: '2021', text: '大学卒業' },
+  /** 自己紹介の本文。段落ごとに配列の要素にする（空配列なら表示されません） */
+  bio: [],
+  /** ラベルと内容の組。上から順に並びます */
+  details: [
+    { label: '専攻', value: '工学 / 有機化学' },
+    { label: '使用ツール', value: 'CLIP STUDIO PAINT（補助として Affinity、Procreate）' },
+    { label: '使用デバイス', value: 'iPad' },
   ],
 };

@@ -53,7 +53,7 @@ src/
 | 名前・肩書きを変える | `src/site.config.ts` の `site` |
 | トップのリンクボタンを増減する | `src/site.config.ts` の `linkButtons` |
 | SNS アイコンを増減する | `src/site.config.ts` の `socials` |
-| プロフィールの本文・経歴を変える | `src/site.config.ts` の `profile` |
+| プロフィールの項目を変える | `src/site.config.ts` の `profile` |
 | ナビゲーションの項目を変える | `src/site.config.ts` の `nav` |
 | 配色を変える | `src/styles/global.css` の `:root` |
 | 記事を追加する | `src/content/blog/` に `.md` を追加 |

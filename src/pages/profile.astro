@@ -9,18 +9,12 @@ import { site, profile } from '../site.config';
 
   {profile.bio.map((paragraph) => <p>{paragraph}</p>)}
 
-  <h2>Skills</h2>
-  <ul class="tags">
-    {profile.skills.map((skill) => <li class="tag">{skill}</li>)}
-  </ul>
-
-  <h2>History</h2>
-  <dl class="history">
+  <dl class="details">
     {
-      profile.history.map((item) => (
+      profile.details.map((item) => (
         <div class="row">
-          <dt>{item.year}</dt>
-          <dd>{item.text}</dd>
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
         </div>
       ))
     }
@@ -28,15 +22,15 @@ import { site, profile } from '../site.config';
 </BaseLayout>
 
 <style>
-  .history {
-    margin: 1rem 0 0;
+  .details {
+    margin: 2.5rem 0 0;
   }
 
   .row {
     display: grid;
     grid-template-columns: 9rem 1fr;
     gap: 0.5rem 1.25rem;
-    padding-block: 0.85rem;
+    padding-block: 1rem;
     border-top: 1px solid var(--border);
   }
 
