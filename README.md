@@ -24,7 +24,7 @@ npm run preview # ビルド結果を確認
 
 ```
 public/
-└── avatar.svg            トップの円形アイコン（差し替え用プレースホルダー）
+└── avatar.jpg            トップの円形アイコン
 src/
 ├── site.config.ts        名前・リンクボタン・SNS・経歴（まずここを編集）
 ├── content.config.ts     ブログのフロントマター定義（スキーマ）
@@ -60,9 +60,10 @@ src/
 
 ## アイコン画像の差し替え
 
-`public/avatar.svg` はプレースホルダーです。写真を `public/` に置いて、
-`src/site.config.ts` の `avatar` を `'/avatar.jpg'` のように変えてください。
-`avatar: null` にすると、名前の頭文字が代わりに表示されます。
+アイコンは `public/avatar.jpg` です。差し替えるときは同じ名前で上書きするか、
+別名で `public/` に置いて `src/site.config.ts` の `avatar` を書き換えてください。
+指定したファイルが無い場合は `.jpg` `.jpeg` `.webp` を順に試し、
+どれも無ければ名前の頭文字が円の中に表示されます。`avatar: null` でも同じです。
 
 新しい SNS を追加したいときは、`src/components/Icon.astro` の `paths` に
 24×24 の viewBox で SVG のパスを足してから、`socials` でその名前を指定します。
