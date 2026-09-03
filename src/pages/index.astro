@@ -21,7 +21,8 @@ const initial = site.name.trim().charAt(0);
               alt=""
               width="120"
               height="120"
-              onerror="this.hidden = true; this.nextElementSibling.hidden = false;"
+              data-fallbacks="/avatar.jpg,/avatar.jpeg,/avatar.webp"
+              onerror="const q = (this.dataset.fallbacks || '').split(',').filter(Boolean); const next = q.shift(); this.dataset.fallbacks = q.join(','); if (next) { this.src = next; } else { this.hidden = true; this.nextElementSibling.hidden = false; }"
             />
           )
         }
