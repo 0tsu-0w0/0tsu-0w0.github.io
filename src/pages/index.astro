@@ -29,6 +29,7 @@ const initial = site.name.trim().charAt(0);
           {initial}
         </span>
         <h1>{site.name}</h1>
+        {site.nameRoman && <p class="roman">{site.nameRoman}</p>}
         <p class="tagline">{site.tagline}</p>
       </header>
 
@@ -105,11 +106,20 @@ const initial = site.name.trim().charAt(0);
     font-weight: 500;
     font-size: 1.65rem;
     letter-spacing: 0.06em;
-    margin: 1.25rem 0 0.35rem;
+    margin: 1.25rem 0 0;
+  }
+
+  .roman {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-serif);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
   }
 
   .tagline {
-    margin: 0 0 1.75rem;
+    margin: 0.6rem 0 1.75rem;
     color: var(--text-muted);
     font-size: 0.9rem;
     letter-spacing: 0.04em;

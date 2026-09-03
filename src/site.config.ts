@@ -4,9 +4,11 @@
  */
 export const site = {
   /** サイト名（<title> の末尾に使われます） */
-  title: 'おつ0w0',
+  title: '長月おつ',
   /** トップに大きく出る表示名 */
-  name: 'おつ0w0',
+  name: '長月おつ',
+  /** 名前のローマ字表記。トップで名前の下に小さく出ます（不要なら null） */
+  nameRoman: 'Nagatuki 0tsu',
   /** 肩書き・一行紹介 */
   tagline: '関東のどこかにいる化学徒',
   /** <meta name="description"> の既定値 */
