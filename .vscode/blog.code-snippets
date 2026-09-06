@@ -1,0 +1,28 @@
+{
+  // src/content/blog/ の .md でフロントマターを書くためのスニペットです。
+  // Markdown ファイルで接頭辞を打ち、Tab または Enter で展開します
+  // （候補が自動で出ないときは Ctrl+Space）。
+  "ブログ記事のフロントマター": {
+    "scope": "markdown",
+    "prefix": "post",
+    "description": "記事の先頭に置くフロントマター一式",
+    "body": [
+      "---",
+      "title: '${1:タイトル}'",
+      "description: '${2:一覧や OGP に出る説明}'",
+      "pubDate: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "# updatedDate: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "tags: [${3}]",
+      "draft: ${4|true,false|}",
+      "---",
+      "",
+      "$0"
+    ]
+  },
+  "更新日を入れる": {
+    "scope": "markdown",
+    "prefix": "updated",
+    "description": "updatedDate に今日の日付を入れる",
+    "body": ["updatedDate: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE"]
+  }
+}

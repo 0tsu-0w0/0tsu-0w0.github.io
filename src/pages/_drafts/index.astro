@@ -1,0 +1,50 @@
+---
+// 下書き（drafts/）の一覧。開発サーバーでだけ表示されるページです
+// （astro.config.mjs で dev のときだけ /blog/drafts/ に割り当てています）。
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostLink from '../../components/PostLink.astro';
+
+const drafts = (await getCollection('drafts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="下書き" description="公開前の下書きの一覧です。">
+  <h1>下書き</h1>
+  <p class="lede">drafts/ にある、まだ公開していない記事です。</p>
+  <p class="note small">
+    このページは開発サーバー（<code>npm run dev</code>）でだけ表示されます。公開サイトには出ません。
+  </p>
+
+  {
+    drafts.length === 0 ? (
+      <p class="muted">下書きはありません。<code>npm run new-post</code> で作れます。</p>
+    ) : (
+      <div class="list">
+        {drafts.map((draft) => (
+          <PostLink
+            id={`drafts/${draft.id}`}
+            title={draft.data.title}
+            description={draft.data.description}
+            pubDate={draft.data.pubDate}
+            tags={draft.data.tags}
+          />
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .note {
+    padding: 0.6rem 0.8rem;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+  }
+
+  .list {
+    margin-top: 2rem;
+  }
+</style>

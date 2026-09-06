@@ -8,6 +8,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "new-post": "node scripts/new-post.mjs",
+    "posts": "node scripts/posts.mjs",
+    "save": "node scripts/save.mjs",
+    "publish-post": "node scripts/publish.mjs",
+    "drafts:setup": "node scripts/drafts-setup.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

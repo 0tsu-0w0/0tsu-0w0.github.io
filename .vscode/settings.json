@@ -1,0 +1,9 @@
+{
+  // Markdown では既定で入力候補が出ないため、記事を書くときに
+  // スニペット（blog.code-snippets）が打ちながら出るようにしています。
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true
+    }
+  }
+}

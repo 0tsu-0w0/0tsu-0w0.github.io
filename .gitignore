@@ -1,3 +1,6 @@
+# 下書き（別の private リポジトリで管理しています）
+drafts/
+
 # build output
 dist/
 # generated types

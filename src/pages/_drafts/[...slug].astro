@@ -1,0 +1,95 @@
+---
+// 下書きの本文プレビュー。開発サーバーでだけ表示されるページです。
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const drafts = await getCollection('drafts');
+  return drafts.map((draft) => ({
+    params: { slug: draft.id },
+    props: { draft },
+  }));
+}
+
+const { draft } = Astro.props;
+const { Content } = await render(draft);
+---
+
+<BaseLayout title={`${draft.data.title}（下書き）`} description={draft.data.description}>
+  <p class="note small">下書きのプレビューです。公開サイトには出ません。</p>
+
+  <article>
+    <header>
+      <p class="small muted">
+        <FormattedDate date={draft.data.pubDate} />
+        {
+          draft.data.updatedDate && (
+            <>
+              {' · 更新 '}
+              <FormattedDate date={draft.data.updatedDate} />
+            </>
+          )
+        }
+      </p>
+      <h1>{draft.data.title}</h1>
+      {
+        draft.data.tags.length > 0 && (
+          <ul class="tags">
+            {draft.data.tags.map((tag) => (
+              <li class="tag">{tag}</li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="body">
+      <Content />
+    </div>
+  </article>
+
+  <p class="back"><a href="/blog/drafts/">← 下書き一覧へ</a></p>
+</BaseLayout>
+
+<style>
+  .note {
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 2rem;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+  }
+
+  header {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header p {
+    margin: 0 0 0.35rem;
+  }
+
+  header h1 {
+    margin-bottom: 0.75rem;
+  }
+
+  .body :global(h2) {
+    margin-top: 2.5rem;
+  }
+
+  .body :global(ul),
+  .body :global(ol) {
+    padding-left: 1.4rem;
+  }
+
+  .body :global(li) {
+    margin-bottom: 0.35rem;
+  }
+
+  .back {
+    margin-top: 3rem;
+    font-size: 0.95rem;
+  }
+</style>
