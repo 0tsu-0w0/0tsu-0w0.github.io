@@ -244,6 +244,7 @@ https://x.com/your-account/status/1234567890
 | `https://twitter.com/<user>/status/<id>` | 同上 |
 | `https://www.instagram.com/p/<id>/` | Instagram の投稿（`reel` `tv` も可） |
 | `https://www.youtube.com/watch?v=<id>` | YouTube の動画（`youtu.be` も可） |
+| `https://open.spotify.com/track/<id>` | Spotify のプレイヤー（`album` `playlist` `artist` `show` `episode` も可） |
 | その他 | リンクカード |
 
 文中にリンクとして書いた URL や、他の文と同じ行にある URL は、これまでどおり
@@ -259,6 +260,7 @@ X と Instagram の埋め込みは、各サービスが配布するスクリプ�
 そのため、**その記事を開いた人の情報が X や Instagram にも渡ります。**
 スクリプトはこれらの埋め込みを使っている記事にだけ読み込まれ、使っていない記事には
 入りません。YouTube は cookie を置かない `youtube-nocookie.com` を使っています。
+YouTube と Spotify は iframe なので、読者の情報が渡るのは埋め込みを表示したときだけです。
 
 X の埋め込みの配色は、ページを開いた時点のテーマに合わせます。
 表示後に配色を切り替えても、埋め込みの中だけは元のままです。

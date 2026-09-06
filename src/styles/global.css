@@ -265,6 +265,14 @@ hr {
   border-radius: var(--radius);
 }
 
+/* Spotify は種類ごとに高さが決まっているので、幅だけ広げる */
+.embed-spotify iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius);
+}
+
 .link-card {
   display: block;
   padding: 1rem 1.25rem;

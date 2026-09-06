@@ -7,6 +7,7 @@
  *   https://x.com/user/status/123        → ポストの埋め込み
  *   https://www.instagram.com/p/xxxx/    → 投稿の埋め込み
  *   https://www.youtube.com/watch?v=xxx  → 動画プレイヤー
+ *   https://open.spotify.com/track/xxx   → 再生プレイヤー
  *   その他の URL                          → リンクカード
  *
  * X と Instagram は各サービスが配布するスクリプトで描画されるため、
@@ -60,6 +61,26 @@ function embedFor(rawUrl, used) {
   if (videoId && /^[\w-]{6,}$/.test(videoId)) {
     const id = escapeAttr(videoId);
     return `<div class="embed embed-video"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="YouTube の動画" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+  }
+
+  // Spotify の曲・アルバム・プレイリストなど
+  if (host === 'open.spotify.com') {
+    const segments = url.pathname.split('/').filter(Boolean);
+    // https://open.spotify.com/intl-ja/track/xxx のように言語が挟まることがある
+    if (segments[0]?.startsWith('intl-')) segments.shift();
+    const [type, id] = segments;
+    // 種類ごとにプレイヤーの高さが決まっている
+    const heights = {
+      track: 152,
+      episode: 232,
+      album: 352,
+      playlist: 352,
+      artist: 352,
+      show: 352,
+    };
+    if (type in heights && /^[A-Za-z0-9]+$/.test(id ?? '')) {
+      return `<div class="embed embed-spotify"><iframe src="https://open.spotify.com/embed/${type}/${escapeAttr(id)}" title="Spotify のプレイヤー" height="${heights[type]}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    }
   }
 
   // それ以外はリンクカード
