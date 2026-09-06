@@ -8,7 +8,7 @@ export const site = {
   /** トップに大きく出る表示名 */
   name: '長月おつ',
   /** 名前のローマ字表記。トップで名前の下に小さく出ます（不要なら null） */
-  nameRoman: 'Nagatuki 0tsu',
+  nameRoman: 'Nagatuk1 0tsu',
   /** フッターの著作権表記に使う名義 */
   copyright: '0tus Nagatuk1',
   /** 肩書き・一行紹介 */
