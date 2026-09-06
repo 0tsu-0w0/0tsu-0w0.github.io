@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { satteri } from '@astrojs/markdown-satteri';
+import embeds from './src/lib/mdast-embeds.mjs';
 
 /**
  * 下書きのプレビューを開発サーバーにだけ生やす。
@@ -32,6 +34,8 @@ export default defineConfig({
     format: 'directory',
   },
   markdown: {
+    // 記事に URL だけの行を書くと埋め込みに変わる
+    processor: satteri({ mdastPlugins: [embeds()] }),
     shikiConfig: {
       themes: { light: 'github-light', dark: 'github-dark' },
     },

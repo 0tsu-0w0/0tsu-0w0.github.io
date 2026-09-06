@@ -228,6 +228,41 @@ Remove-Item -Recurse -Force node_modules/.astro
 
 `npm run publish-post` は、公開前のビルド確認をする前に自動で捨てています。
 
+## SNS などの埋め込み
+
+段落に URL だけを 1 行で書くと、埋め込みに変わります（note と同じ書き方です）。
+
+```markdown
+今日のポストです。
+
+https://x.com/your-account/status/1234567890
+```
+
+| URL | 表示 |
+| --- | --- |
+| `https://x.com/<user>/status/<id>` | X のポスト |
+| `https://twitter.com/<user>/status/<id>` | 同上 |
+| `https://www.instagram.com/p/<id>/` | Instagram の投稿（`reel` `tv` も可） |
+| `https://www.youtube.com/watch?v=<id>` | YouTube の動画（`youtu.be` も可） |
+| その他 | リンクカード |
+
+文中にリンクとして書いた URL や、他の文と同じ行にある URL は、これまでどおり
+普通のリンクのままです。埋め込みにしたいときは、前後を空行で挟んで URL だけの
+行にしてください。
+
+対応するサービスを増やすときは `src/lib/mdast-embeds.mjs` の `embedFor` に
+条件を足します。見た目は `src/styles/global.css` の「記事本文の埋め込み」の節です。
+
+### 注意
+
+X と Instagram の埋め込みは、各サービスが配布するスクリプトが描画します。
+そのため、**その記事を開いた人の情報が X や Instagram にも渡ります。**
+スクリプトはこれらの埋め込みを使っている記事にだけ読み込まれ、使っていない記事には
+入りません。YouTube は cookie を置かない `youtube-nocookie.com` を使っています。
+
+X の埋め込みの配色は、ページを開いた時点のテーマに合わせます。
+表示後に配色を切り替えても、埋め込みの中だけは元のままです。
+
 ## 公開
 
 https://0tsu-0w0.github.io/ で公開しています。

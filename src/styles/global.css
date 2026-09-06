@@ -225,6 +225,75 @@ hr {
 }
 
 /* ---------------------------------------------
+   記事本文の埋め込み
+   （URL だけの行を remark-embeds.mjs が置き換えたもの）
+--------------------------------------------- */
+.embed {
+  margin-block: 1.75rem;
+}
+
+/* X と Instagram は各サービスのスクリプトが中身を描画する。
+   読み込まれるまでの間は引用元へのリンクだけが見えている状態になる。 */
+.embed-x,
+.embed-instagram {
+  display: flex;
+  justify-content: center;
+}
+
+.embed-x .twitter-tweet,
+.embed-instagram .instagram-media {
+  margin-inline: auto !important;
+}
+
+/* スクリプトが動かない環境でも読めるよう、素の blockquote に体裁を与える */
+.embed blockquote {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.embed-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.embed-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: var(--radius);
+}
+
+.link-card {
+  display: block;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.link-card:hover {
+  border-color: var(--accent);
+}
+
+.link-card-host {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.link-card-url {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------
    共通パーツ
 --------------------------------------------- */
 .tags {
