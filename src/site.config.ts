@@ -103,7 +103,7 @@ export const profile = {
    * （ビルド時の値を埋め込んだうえで、閲覧時にブラウザ側で上書きします）。
    */
   history: [
-    { year: null, current: true, text: '上記大学に在学' },
+    { year: null, current: true, text: '同大学に在学中' },
     { year: '2023/04', current: false, text: '某大学工学部化学科入学' },
   ],
 };
