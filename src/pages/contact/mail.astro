@@ -3,11 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import { site, contact } from '../../site.config';
 
-const { subject, body } = contact.mailTemplate;
-const mailto =
-  `mailto:${contact.email}` +
-  `?subject=${encodeURIComponent(subject)}` +
-  `&body=${encodeURIComponent(body.join('\n'))}`;
+const mailto = `mailto:${contact.email}?subject=${encodeURIComponent(contact.mailSubject)}`;
 ---
 
 <BaseLayout
@@ -32,7 +28,7 @@ const mailto =
       </a>
     </div>
     <p class="hint small muted">
-      「メールソフトで開く」は、件名と本文の雛形を入れた状態でお使いのメールソフトを起動します。
+      「メールソフトで開く」は、件名を入れた状態でお使いのメールソフトを起動します。
       設定によっては起動しないことがあるので、その場合はアドレスをコピーしてお使いください。
     </p>
   </div>
@@ -45,9 +41,6 @@ const mailto =
     上記が決まっていない段階でも構いません。あわせて、ご依頼の内容がわかる範囲でお書きください。
   </p>
 
-  <h2>本文の雛形</h2>
-  <p>そのまま貼り付けてお使いいただけます。</p>
-  <pre class="template">{body.join('\n')}</pre>
 </BaseLayout>
 
 <script>
@@ -146,10 +139,6 @@ const mailto =
     margin-bottom: 0.3rem;
   }
 
-  .template {
-    white-space: pre-wrap;
-    font-size: 0.9rem;
-  }
 
   @media (max-width: 30rem) {
     .address-box {
