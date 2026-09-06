@@ -3,9 +3,9 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // 公開先が決まったら、実際のドメインに書き換えてください。
+  // GitHub Pages のユーザーサイトとして公開する。
   // canonical URL と OGP の URL に使われます。
-  site: 'https://example.com',
+  site: 'https://0tsu-0w0.github.io',
   build: {
     // すべてのページを /path/index.html として出力します（末尾スラッシュ付き URL）
     format: 'directory',

@@ -100,13 +100,16 @@ draft: false
 
 `updatedDate`（更新日）は任意です。`draft: true` にすると公開されません。
 
-## 公開する前に
+## 公開
 
-`astro.config.mjs` の `site` を実際のドメインに書き換えてください。
-canonical URL と OGP の URL に使われます。
+https://0tsu-0w0.github.io/ で公開しています。
 
-`npm run build` で `dist/` に出力されるものはただの静的ファイルなので、
-GitHub Pages / Cloudflare Pages / Vercel / Netlify など、どこにでも置けます。
+`main` に push すると `.github/workflows/deploy.yml` が動き、ビルドした `dist/` が
+GitHub Pages へ配信されます。手元で公開作業をする必要はありません。
+GitHub の Actions タブから手動で実行することもできます。
+
+公開先のドメインは `astro.config.mjs` の `site` に書いてあります。
+canonical URL と OGP の URL に使われるので、独自ドメインへ移すときはここも変更してください。
 
 ## 注意（Windows）
 
