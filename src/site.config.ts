@@ -124,12 +124,6 @@ export const contact = {
       note: '内容と条件によってはお受けできます。',
       updated: '2026.09.06',
     },
-    {
-      label: 'アイコン制作',
-      state: 'closed',
-      note: '',
-      updated: '2026.09.06',
-    },
   ],
   /** 案内ボックスの見出し */
   noticeTitle: 'ご依頼について',
