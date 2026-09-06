@@ -6,6 +6,7 @@
 - `/` — リンクまとめ（アイコン、名前、SNS、リンクボタン）
 - `/blog/` — 記事一覧、`/blog/<ファイル名>/` — 記事本文
 - `/profile/` — 自己紹介、スキル、経歴
+- `/contact/` — 依頼の受付状況と問い合わせの案内
 
 レイアウトは [akakura.wixsite.com/mysite](https://akakura.wixsite.com/mysite) の構成を参考にしています
 （中央寄せの円形アイコン、区切り線で区切った中央ナビ、広い画面で右端に固定される円形 SNS アイコン）。
@@ -54,6 +55,7 @@ src/
 | トップのリンクボタンを増減する | `src/site.config.ts` の `linkButtons` |
 | SNS アイコンを増減する | `src/site.config.ts` の `socials` |
 | プロフィールの項目を変える | `src/site.config.ts` の `profile` |
+| 受付状況や依頼の案内を変える | `src/site.config.ts` の `contact` |
 | ナビゲーションの項目を変える | `src/site.config.ts` の `nav` |
 | 配色を変える | `src/styles/global.css` の `:root` |
 | 記事を追加する | `src/content/blog/` に `.md` を追加 |

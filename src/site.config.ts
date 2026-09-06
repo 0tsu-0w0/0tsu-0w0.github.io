@@ -61,9 +61,9 @@ export const linkButtons = [
   },
   {
     label: 'Contact',
-    note: 'ご連絡はメールで',
-    href: 'mailto:otsu.sapphire09@gmail.com',
-    internal: false,
+    note: 'ご依頼・お問い合わせについて',
+    href: '/contact/',
+    internal: true,
   },
 ];
 
@@ -84,6 +84,7 @@ export const nav = [
   { label: 'Home', href: '/' },
   { label: 'Blog', href: '/blog/' },
   { label: 'Profile', href: '/profile/' },
+  { label: 'Contact', href: '/contact/' },
 ];
 
 /** Profile ページの中身 */
@@ -104,5 +105,43 @@ export const profile = {
   history: [
     { year: null, current: true, text: '上記大学に在学' },
     { year: '2023/04', current: false, text: '某大学工学部化学科入学' },
+  ],
+};
+
+/**
+ * Contact ページの中身。
+ * state は 'open'（受付中）/ 'caution'（要相談）/ 'closed'（受付停止）の 3 種類で、
+ * バッジの文言と色が変わります。
+ */
+export const contact = {
+  /** 連絡先メールアドレス */
+  email: 'otsu.sapphire09@gmail.com',
+  /** 受付状況。カードとして横に並びます */
+  statuses: [
+    {
+      label: 'イラスト依頼',
+      state: 'caution',
+      note: '内容と条件によってはお受けできます。',
+      updated: '2026.09.06',
+    },
+    {
+      label: 'アイコン制作',
+      state: 'closed',
+      note: '',
+      updated: '2026.09.06',
+    },
+  ],
+  /** 案内ボックスの見出し */
+  noticeTitle: 'ご依頼について',
+  /** 箇条書きの前に置く段落 */
+  intro: [
+    'ご依頼をご検討いただきありがとうございます。相談ベースでの対応も可能ですので、お気軽にご連絡ください。',
+  ],
+  /** 「ご依頼の際は」に続く箇条書き */
+  checklist: ['利用用途', '予算', '納期'],
+  /** 箇条書きの後に置く段落 */
+  outro: [
+    '詳細が決まりきっていない状態でも構いません。何卒よろしくお願いいたします。',
+    '学業の都合上、いただいたご依頼はまとめて可否を判断しております。返答までお待ちいただく場合があります。また、すべてのお問い合わせにお返事をお約束するものではございません。あらかじめご了承ください。',
   ],
 };

@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { site, contact } from '../site.config';
+
+const stateLabels: Record<string, string> = {
+  open: '受付中',
+  caution: '要相談',
+  closed: '受付停止',
+};
+---
+
+<BaseLayout title="Contact" description={`${site.name} へのご依頼・お問い合わせについて。`}>
+  <h1>Contact</h1>
+  <p class="lede">ご依頼・お問い合わせについてのご案内です。</p>
+
+  <h2>Status</h2>
+  <ul class="status-grid">
+    {
+      contact.statuses.map((item) => (
+        <li class="card">
+          <div class="card-head">
+            <h3>{item.label}</h3>
+            <span class:list={['badge', item.state]}>{stateLabels[item.state]}</span>
+          </div>
+          {item.note && <p class="note">{item.note}</p>}
+          <p class="updated">UPDATED: {item.updated}</p>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2>ご連絡先</h2>
+  <div class="panel">
+    <h3 class="panel-title">
+      <Icon name="info" size={20} />
+      {contact.noticeTitle}
+    </h3>
+
+    {contact.intro.map((paragraph) => <p>{paragraph}</p>)}
+
+    <p>また、ご依頼の際は</p>
+    <ul class="checklist">
+      {contact.checklist.map((entry) => <li>{entry}</li>)}
+    </ul>
+    <p>を明記していただけますと非常に助かります。</p>
+
+    {contact.outro.map((paragraph) => <p>{paragraph}</p>)}
+
+    <p class="action">
+      <a class="mail-button" href={`mailto:${contact.email}`}>
+        <Icon name="mail" size={18} />
+        メールで連絡する
+      </a>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  h2 {
+    margin-top: 3rem;
+  }
+
+  /* ---- 受付状況のカード ---- */
+  .status-grid {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .card-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .card h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .badge {
+    font-size: 0.72rem;
+    line-height: 1.7;
+    padding: 0.05rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    white-space: nowrap;
+  }
+
+  .badge.caution {
+    background: var(--badge-caution-bg);
+    color: var(--badge-caution-text);
+  }
+
+  .badge.open {
+    background: var(--badge-open-bg);
+    color: var(--badge-open-text);
+  }
+
+  .note {
+    margin: 0.7rem 0 0;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+  }
+
+  .updated {
+    margin: 1.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  /* ---- ご依頼についての案内 ---- */
+  .panel {
+    margin-top: 1rem;
+    padding: 1.75rem 1.75rem 1.5rem;
+    border-radius: var(--radius);
+    background: var(--panel-bg);
+  }
+
+  .panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+  }
+
+  .panel p {
+    font-size: 0.95rem;
+  }
+
+  .panel p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .checklist {
+    margin: 0 0 1.15rem;
+    padding-left: 1.4rem;
+    font-size: 0.95rem;
+  }
+
+  .checklist li {
+    margin-bottom: 0.2rem;
+  }
+
+  .action {
+    margin-top: 1.75rem;
+  }
+
+  .mail-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .mail-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  @media (max-width: 30rem) {
+    .panel {
+      padding: 1.35rem 1.15rem 1.15rem;
+    }
+  }
+</style>

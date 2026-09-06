@@ -11,6 +11,15 @@
   --accent: #9a3412;
   --accent-soft: #fdf1e7;
 
+  /* 受付状況バッジと案内ボックスの色 */
+  --badge-bg: #eceae4;
+  --badge-text: #5f5c56;
+  --badge-caution-bg: #fbf0c9;
+  --badge-caution-text: #7a5a05;
+  --badge-open-bg: #dff0e3;
+  --badge-open-text: #2f6b41;
+  --panel-bg: #f1f2f6;
+
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif;
   --font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, Georgia,
@@ -31,6 +40,14 @@
     --border: #33313b;
     --accent: #f0a071;
     --accent-soft: #2a2028;
+
+    --badge-bg: #2c2a35;
+    --badge-text: #a5a19a;
+    --badge-caution-bg: #38311d;
+    --badge-caution-text: #e3c374;
+    --badge-open-bg: #1f3026;
+    --badge-open-text: #8ecfa3;
+    --panel-bg: #1c1b23;
   }
 }
 
