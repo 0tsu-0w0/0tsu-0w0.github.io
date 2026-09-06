@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Icon from '../components/Icon.astro';
-import { site, contact } from '../site.config';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { site, contact } from '../../site.config';
 
 const stateLabels: Record<string, string> = {
   open: '受付中',
@@ -48,7 +48,7 @@ const stateLabels: Record<string, string> = {
     {contact.outro.map((paragraph) => <p>{paragraph}</p>)}
 
     <p class="action">
-      <a class="mail-button" href={`mailto:${contact.email}`}>
+      <a class="mail-button" href="/contact/mail/">
         <Icon name="mail" size={18} />
         メールで連絡する
       </a>

@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { site, contact } from '../../site.config';
+
+const { subject, body } = contact.mailTemplate;
+const mailto =
+  `mailto:${contact.email}` +
+  `?subject=${encodeURIComponent(subject)}` +
+  `&body=${encodeURIComponent(body.join('\n'))}`;
+---
+
+<BaseLayout
+  title="メールでのご連絡"
+  description={`${site.name} へのメールでのご連絡方法です。`}
+>
+  <p class="breadcrumb small"><a href="/contact/">← Contact</a></p>
+
+  <h1>メールでのご連絡</h1>
+  <p class="lede">下のアドレス宛にご連絡ください。</p>
+
+  <div class="address-box">
+    <p class="address" id="address">{contact.email}</p>
+    <div class="buttons">
+      <button type="button" id="copy" data-address={contact.email}>
+        <Icon name="copy" size={16} />
+        <span data-copy-label>アドレスをコピー</span>
+      </button>
+      <a class="primary" href={mailto}>
+        <Icon name="mail" size={16} />
+        メールソフトで開く
+      </a>
+    </div>
+    <p class="hint small muted">
+      「メールソフトで開く」は、件名と本文の雛形を入れた状態でお使いのメールソフトを起動します。
+      設定によっては起動しないことがあるので、その場合はアドレスをコピーしてお使いください。
+    </p>
+  </div>
+
+  <h2>お書き添えいただきたいこと</h2>
+  <ul class="checklist">
+    {contact.checklist.map((entry) => <li>{entry}</li>)}
+  </ul>
+  <p>
+    上記が決まっていない段階でも構いません。あわせて、ご依頼の内容がわかる範囲でお書きください。
+  </p>
+
+  <h2>本文の雛形</h2>
+  <p>そのまま貼り付けてお使いいただけます。</p>
+  <pre class="template">{body.join('\n')}</pre>
+</BaseLayout>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>('#copy');
+  const label = document.querySelector<HTMLElement>('[data-copy-label]');
+
+  button?.addEventListener('click', async () => {
+    const address = button.dataset.address ?? '';
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(address);
+      copied = true;
+    } catch {
+      // クリップボードが使えない場合は、代わりにアドレスを選択状態にする
+      const target = document.querySelector('#address');
+      if (target) {
+        const range = document.createRange();
+        range.selectNodeContents(target);
+        const selection = getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+      }
+    }
+    if (label) {
+      label.textContent = copied ? 'コピーしました' : '選択しました';
+      setTimeout(() => {
+        label.textContent = 'アドレスをコピー';
+      }, 2000);
+    }
+  });
+</script>
+
+<style>
+  .breadcrumb {
+    margin: 0 0 1.5rem;
+  }
+
+  .address-box {
+    margin-top: 2rem;
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: var(--panel-bg);
+  }
+
+  .address {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 0.7rem + 1.4vw, 1.35rem);
+    word-break: break-all;
+    user-select: all;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .buttons button,
+  .buttons a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .buttons button:hover,
+  .buttons a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .buttons .primary {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .hint {
+    margin: 1rem 0 0;
+  }
+
+  .checklist {
+    padding-left: 1.4rem;
+  }
+
+  .checklist li {
+    margin-bottom: 0.3rem;
+  }
+
+  .template {
+    white-space: pre-wrap;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 30rem) {
+    .address-box {
+      padding: 1.25rem 1.15rem;
+    }
+  }
+</style>
