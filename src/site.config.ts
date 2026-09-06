@@ -9,6 +9,8 @@ export const site = {
   name: '長月おつ',
   /** 名前のローマ字表記。トップで名前の下に小さく出ます（不要なら null） */
   nameRoman: 'Nagatuki 0tsu',
+  /** フッターの著作権表記に使う名義 */
+  copyright: '0tus Nagatuk1',
   /** 肩書き・一行紹介 */
   tagline: '関東のどこかにいる化学徒',
   /** <meta name="description"> の既定値 */
