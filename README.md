@@ -58,7 +58,17 @@ src/
 | 受付状況や依頼の案内を変える | `src/site.config.ts` の `contact` |
 | ナビゲーションの項目を変える | `src/site.config.ts` の `nav` |
 | 配色を変える | `src/styles/global.css` の `:root` |
+| 配色の切り替えを直す | `src/components/ThemeToggle.astro` |
 | 記事を追加する | `src/content/blog/` に `.md` を追加 |
+
+## 配色の切り替え
+
+各ページの上部に、ライト / ダーク / 環境依存を選ぶボタンがあります。
+選択は `localStorage` の `theme` に保存され、`<html>` の `data-theme` 属性として
+反映されます。属性が無い状態が「環境依存」で、OS の設定に従います。
+
+色は `light-dark(ライト時の値, ダーク時の値)` の形で `global.css` の `:root` に
+まとめてあるので、片方だけ変えたいときもその行だけ触れば済みます。
 
 ## アイコン画像の差し替え
 

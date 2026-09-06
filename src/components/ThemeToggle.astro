@@ -1,0 +1,164 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * 配色の切り替え。ライト / ダーク / 環境依存（OS の設定に従う）の 3 択。
+ * 選択は localStorage に保存され、<html> の data-theme 属性として反映される。
+ * 属性が無い状態が「環境依存」にあたる。
+ */
+const options = [
+  { value: 'light', label: 'ライト', icon: 'sun' },
+  { value: 'dark', label: 'ダーク', icon: 'moon' },
+  { value: 'system', label: '環境依存', icon: 'auto' },
+];
+---
+
+<div class="theme-toggle" role="group" aria-label="配色の切り替え">
+  <span class="indicator" aria-hidden="true"></span>
+  {
+    options.map((option, index) => (
+      <button
+        type="button"
+        data-theme-value={option.value}
+        data-index={index}
+        title={option.label}
+        aria-pressed="false"
+      >
+        <Icon name={option.icon} size={16} />
+        <span class="sr-only">{option.label}</span>
+      </button>
+    ))
+  }
+</div>
+
+<script>
+  const STORAGE_KEY = 'theme';
+  const root = document.documentElement;
+  const group = document.querySelector<HTMLElement>('.theme-toggle');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-theme-value]');
+
+  function read(): string {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved === 'light' || saved === 'dark' ? saved : 'system';
+    } catch {
+      return 'system';
+    }
+  }
+
+  function apply(theme: string) {
+    if (theme === 'system') {
+      delete root.dataset.theme;
+    } else {
+      root.dataset.theme = theme;
+    }
+    for (const button of buttons) {
+      const active = button.dataset.themeValue === theme;
+      button.setAttribute('aria-pressed', String(active));
+      // 押された位置までスライドさせる
+      if (active && group) {
+        group.style.setProperty('--index', button.dataset.index ?? '0');
+      }
+    }
+  }
+
+  /** 切り替えの前後だけ、配色が滑らかに変わるようにする */
+  let timer: number | undefined;
+  function withTransition(run: () => void) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      run();
+      return;
+    }
+    root.classList.add('theme-transition');
+    run();
+    clearTimeout(timer);
+    timer = setTimeout(() => root.classList.remove('theme-transition'), 400);
+  }
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const theme = button.dataset.themeValue ?? 'system';
+      try {
+        if (theme === 'system') {
+          localStorage.removeItem(STORAGE_KEY);
+        } else {
+          localStorage.setItem(STORAGE_KEY, theme);
+        }
+      } catch {
+        // プライベートブラウジングなどで保存できない場合は、このページ内でだけ切り替わる
+      }
+      withTransition(() => apply(theme));
+    });
+  }
+
+  // 読み込み直後はスライドさせずに位置だけ合わせる
+  apply(read());
+  requestAnimationFrame(() => group?.classList.add('ready'));
+</script>
+
+<style>
+  .theme-toggle {
+    --size: 2rem;
+    --gap: 2px;
+    --index: 2;
+
+    position: relative;
+    display: inline-flex;
+    gap: var(--gap);
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+  }
+
+  /* 選択中の位置を示す丸。ボタンの下に敷いて左右にスライドする */
+  .indicator {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: var(--accent-soft);
+    transform: translateX(calc(var(--index) * (var(--size) + var(--gap))));
+  }
+
+  .theme-toggle.ready .indicator {
+    transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  button {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: var(--size);
+    height: var(--size);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.28s ease;
+  }
+
+  button:hover {
+    color: var(--text);
+  }
+
+  button[aria-pressed='true'] {
+    color: var(--accent);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { site, nav } from '../site.config';
 
 interface Props {
@@ -20,8 +21,9 @@ const path = Astro.url.pathname;
     <header class="site-header">
       <div class="wrap header-inner">
         <a class="brand" href="/">{site.name}</a>
-        <nav aria-label="メインナビゲーション">
-          <ul>
+        <div class="header-right">
+          <nav aria-label="メインナビゲーション">
+            <ul>
             {
               nav.map((item) => {
                 const current =
@@ -35,8 +37,10 @@ const path = Astro.url.pathname;
                 );
               })
             }
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
 
@@ -76,6 +80,14 @@ const path = Astro.url.pathname;
     padding-block: 0.9rem;
   }
 
+  .header-right {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.6rem 1rem;
+  }
+
   .brand {
     font-family: var(--font-serif);
     font-size: 1.05rem;
@@ -87,6 +99,7 @@ const path = Astro.url.pathname;
   /* 参考サイトのように、項目の間を細い縦線で区切る */
   nav ul {
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -119,6 +132,22 @@ const path = Astro.url.pathname;
     text-decoration-color: var(--accent);
     text-decoration-thickness: 2px;
     text-underline-offset: 0.35em;
+  }
+
+  /* 項目が増えると狭い画面で入りきらなくなるので、余白を詰めて折り返す */
+  @media (max-width: 34rem) {
+    .header-inner {
+      justify-content: center;
+      gap: 0.35rem 1rem;
+    }
+
+    nav a {
+      padding-inline: 0.6rem;
+    }
+
+    nav li:last-child a {
+      padding-right: 0.6rem;
+    }
   }
 
   .site-footer {

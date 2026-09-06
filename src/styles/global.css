@@ -1,24 +1,47 @@
 /* ---------------------------------------------
    デザイントークン
-   色を変えたいときはこの :root だけ触れば全体に反映されます
+
+   色は light-dark(ライト時の値, ダーク時の値) で 1 行にまとめている。
+   どちらが使われるかは color-scheme で決まるので、テーマの切り替えは
+   下の :root[data-theme=...] で color-scheme を差し替えるだけで済む。
+
+   各色の 1 行目は light-dark() に未対応のブラウザ向けのフォールバック。
+   その場合は常にライトの配色になる。
 --------------------------------------------- */
 :root {
+  /* テーマ未指定のときは OS の設定に従う（環境依存） */
+  color-scheme: light dark;
+
   --bg: #fbfbf9;
+  --bg: light-dark(#fbfbf9, #16151a);
   --surface: #ffffff;
+  --surface: light-dark(#ffffff, #1e1d24);
   --text: #1c1b19;
+  --text: light-dark(#1c1b19, #ecebe8);
   --text-muted: #6b6862;
+  --text-muted: light-dark(#6b6862, #a5a19a);
   --border: #e4e1da;
+  --border: light-dark(#e4e1da, #33313b);
   --accent: #9a3412;
+  --accent: light-dark(#9a3412, #f0a071);
   --accent-soft: #fdf1e7;
+  --accent-soft: light-dark(#fdf1e7, #2a2028);
 
   /* 受付状況バッジと案内ボックスの色 */
   --badge-bg: #eceae4;
+  --badge-bg: light-dark(#eceae4, #2c2a35);
   --badge-text: #5f5c56;
+  --badge-text: light-dark(#5f5c56, #a5a19a);
   --badge-caution-bg: #fbf0c9;
+  --badge-caution-bg: light-dark(#fbf0c9, #38311d);
   --badge-caution-text: #7a5a05;
+  --badge-caution-text: light-dark(#7a5a05, #e3c374);
   --badge-open-bg: #dff0e3;
+  --badge-open-bg: light-dark(#dff0e3, #1f3026);
   --badge-open-text: #2f6b41;
+  --badge-open-text: light-dark(#2f6b41, #8ecfa3);
   --panel-bg: #f1f2f6;
+  --panel-bg: light-dark(#f1f2f6, #1c1b23);
 
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     'Hiragino Sans', 'Noto Sans JP', Meiryo, sans-serif;
@@ -28,33 +51,36 @@
 
   --measure: 42rem;
   --radius: 10px;
-  color-scheme: light dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #16151a;
-    --surface: #1e1d24;
-    --text: #ecebe8;
-    --text-muted: #a5a19a;
-    --border: #33313b;
-    --accent: #f0a071;
-    --accent-soft: #2a2028;
+/* 明示的にテーマを選んだとき。値は data-theme 属性として <html> に付く */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
 
-    --badge-bg: #2c2a35;
-    --badge-text: #a5a19a;
-    --badge-caution-bg: #38311d;
-    --badge-caution-text: #e3c374;
-    --badge-open-bg: #1f3026;
-    --badge-open-text: #8ecfa3;
-    --panel-bg: #1c1b23;
-  }
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* 配色を切り替えた瞬間だけ、全体の色を滑らかに変化させる。
+   常時かけるとホバーなど他の演出とぶつかるため、
+   切り替えの前後 0.4 秒だけ <html> にこのクラスが付く。 */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background-color 0.28s ease,
+    border-color 0.28s ease,
+    color 0.28s ease,
+    fill 0.28s ease,
+    transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) !important;
 }
 
 /* display を指定した要素にも hidden 属性を効かせる
@@ -157,11 +183,12 @@ pre {
   line-height: 1.6;
 }
 
-/* Shiki のシンタックスハイライトをダークテーマに追従させる
-   （astro.config.mjs の shikiConfig.themes と対になる指定です） */
+/* Shiki のシンタックスハイライトをテーマに追従させる
+   （astro.config.mjs の shikiConfig.themes と対になる指定です）。
+   ここだけは Shiki 側の CSS 変数を使うため light-dark() が使えず、
+   OS 設定と明示指定の 2 通りを書き分けている。 */
 @media (prefers-color-scheme: dark) {
-  .astro-code,
-  .astro-code span {
+  :root:not([data-theme='light']) :is(.astro-code, .astro-code span) {
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
     font-style: var(--shiki-dark-font-style) !important;
@@ -170,9 +197,12 @@ pre {
   }
 }
 
-pre code {
-  background: none;
-  padding: 0;
+:root[data-theme='dark'] :is(.astro-code, .astro-code span) {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 blockquote {

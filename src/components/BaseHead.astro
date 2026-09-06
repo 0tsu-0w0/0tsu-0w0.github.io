@@ -12,6 +12,19 @@ const pageTitle = title ? `${title} | ${site.title}` : site.title;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'http://localhost:4321');
 ---
 
+<!-- 保存された配色の選択を、最初の描画より前に <html> へ反映する。
+     ここで属性を付けておかないと、読み込み直後に一瞬だけ別の配色が見える。 -->
+<script is:inline>
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') {
+      document.documentElement.dataset.theme = saved;
+    }
+  } catch (e) {
+    /* 保存領域が使えない環境では OS の設定に従う */
+  }
+</script>
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

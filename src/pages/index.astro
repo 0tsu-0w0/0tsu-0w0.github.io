@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { site, linkButtons } from '../site.config';
 
 const initial = site.name.trim().charAt(0);
@@ -11,6 +12,10 @@ const initial = site.name.trim().charAt(0);
     <BaseHead />
   </head>
   <body class="link-page">
+    <div class="theme-slot">
+      <ThemeToggle />
+    </div>
+
     <main>
       <header class="profile">
         {
@@ -66,10 +71,17 @@ const initial = site.name.trim().charAt(0);
 
 <style>
   .link-page {
+    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     min-height: 100svh;
+  }
+
+  .theme-slot {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
 
   main {
