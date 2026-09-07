@@ -52,23 +52,7 @@ const stateLabels: Record<string, string> = {
         <Icon name="mail" size={18} />
         メールで連絡する
       </a>
-      {
-        contact.skeb && (
-          <a class="button" href={contact.skeb} target="_blank" rel="noopener noreferrer">
-            <Icon name="external" size={18} />
-            Skeb でリクエストする
-          </a>
-        )
-      }
     </div>
-    {
-      contact.skeb && (
-        <p class="small muted skeb-note">
-          Skeb は、金額と納期が決まった状態でリクエストを送れるサービスです。
-          やり取りを挟まずに依頼したい場合はこちらが早いです。
-        </p>
-      )
-    }
   </div>
 </BaseLayout>
 
@@ -182,10 +166,6 @@ const stateLabels: Record<string, string> = {
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 1.75rem;
-  }
-
-  .skeb-note {
-    margin: 0.9rem 0 0;
   }
 
   .button {

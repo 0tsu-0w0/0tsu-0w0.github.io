@@ -6,7 +6,7 @@
 - `/` — リンクまとめ（アイコン、名前、SNS、リンクボタン）
 - `/blog/` — 記事一覧、`/blog/<ファイル名>/` — 記事本文
 - `/profile/` — 自己紹介、スキル、経歴
-- `/contact/` — 依頼の受付状況、Skeb へのリンク、問い合わせの案内
+- `/contact/` — 依頼の受付状況と問い合わせの案内
 - `/contact/mail/` — メールアドレスとコピーボタン
 
 レイアウトは [akakura.wixsite.com/mysite](https://akakura.wixsite.com/mysite) の構成を参考にしています
