@@ -240,6 +240,36 @@ Remove-Item -Recurse -Force node_modules/.astro
 
 `npm run publish-post` は、公開前のビルド確認をする前に自動で捨てています。
 
+## SNS で共有されたときの見え方（OGP）
+
+すべてのページに Open Graph と X のカード用のメタタグが入っています。
+Facebook・X・LINE・Discord・Slack・Mastodon・Bluesky・はてなブックマークなど、
+OGP を読む一般的なサービスで、タイトル・説明・画像付きのカードとして表示されます。
+
+カード画像は `public/og.png`（1200x630）です。名前やタグラインを変えたら
+作り直してください。
+
+```
+npm run og-image
+```
+
+生成に使う素材は `public/avatar.jpg` と `src/site.config.ts` の
+`name` / `nameRoman` / `tagline` です。レイアウトを変えたいときは
+`scripts/og-image.mjs` を編集します。**生成した PNG はコミットします**
+（公開時のビルドでは作り直しません）。
+
+記事ごとにカード画像を変えたいときは、フロントマターに `image` を足します。
+
+```markdown
+---
+title: '記事のタイトル'
+image: '/og-posts/my-post.png'
+---
+```
+
+記事ページは `og:type` が `article` になり、公開日・更新日・タグも
+メタタグとして出力されます。
+
 ## SNS などの埋め込み
 
 段落に URL だけを 1 行で書くと、埋め込みに変わります（note と同じ書き方です）。

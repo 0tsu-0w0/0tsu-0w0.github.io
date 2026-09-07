@@ -27,7 +27,7 @@ const TEXT_X = AVATAR_X + AVATAR_SIZE + 80;
 async function readSiteConfig() {
   const source = await readFile(path.join(ROOT, 'src/site.config.ts'), 'utf8');
   const pick = (key) => {
-    const match = source.match(new RegExp(`${key}:\s*'([^']*)'`));
+    const match = source.match(new RegExp(key + ": *'([^']*)'"));
     return match ? match[1] : '';
   };
   return {
@@ -50,7 +50,7 @@ const background = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" hei
   <rect width="${WIDTH}" height="${HEIGHT}" fill="#fbfbf9"/>
   <rect x="0" y="0" width="${WIDTH}" height="10" fill="#9a3412"/>
   <text x="${TEXT_X}" y="284" font-family="Yu Gothic UI, Yu Gothic, Meiryo, Hiragino Sans, sans-serif" font-size="76" font-weight="700" fill="#1c1b19">${escapeXml(name)}</text>
-  <text x="${TEXT_X}" y="330" font-family="Georgia, Times New Roman, serif" font-size="26" letter-spacing="5" fill="#6b6862">${escapeXml(nameRoman.toUpperCase())}</text>
+  <text x="${TEXT_X}" y="330" font-family="Segoe UI" font-size="26" letter-spacing="5" fill="#6b6862">${escapeXml(nameRoman.toUpperCase())}</text>
   <text x="${TEXT_X}" y="400" font-family="Yu Gothic UI, Yu Gothic, Meiryo, Hiragino Sans, sans-serif" font-size="32" fill="#6b6862">${escapeXml(tagline)}</text>
   <text x="${TEXT_X}" y="470" font-family="Consolas, monospace" font-size="22" fill="#9a3412">0tsu-0w0.github.io</text>
 </svg>`;

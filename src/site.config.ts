@@ -21,6 +21,15 @@ export const site = {
    * null にすると name の頭文字が代わりに表示されます。
    */
   avatar: '/avatar.jpg',
+  /**
+   * SNS で共有されたときに出るカード画像。1200x630。
+   * npm run og-image で作り直せます。
+   */
+  ogImage: '/og.png',
+  /** X のアカウント。カードの「@」表示に使われます */
+  twitterHandle: '@_0tmz4_09',
+  /** og:locale。日本語のページなので ja_JP */
+  locale: 'ja_JP',
 } as const;
 
 /**

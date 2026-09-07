@@ -9,6 +9,8 @@ const postSchema = z.object({
   pubDate: z.coerce.date(),
   updatedDate: z.coerce.date().optional(),
   tags: z.array(z.string()).default([]),
+  /** この記事だけ SNS のカード画像を変えたいとき（public/ からのパス） */
+  image: z.string().optional(),
   /** true にすると、公開済みの記事を一覧・詳細ページから外せます */
   draft: z.boolean().default(false),
 });
@@ -23,6 +25,7 @@ const draftSchema = z.object({
   pubDate: z.coerce.date().catch(() => new Date()),
   updatedDate: z.coerce.date().optional().catch(undefined),
   tags: z.array(z.string()).catch([]),
+  image: z.string().optional().catch(undefined),
   draft: z.boolean().catch(false),
 });
 
