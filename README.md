@@ -135,11 +135,23 @@ npm run new-post
 VS Code で開きます。ファイル名は空のまま Enter でも構いません（タイトルが英数字なら
 そこから、日本語なら今日の日付が候補になります）。
 
-質問を省いて一度に渡すこともできます。
+タイトルと説明をその場で渡すこともできます。
 
 ```
-npm run new-post -- --title "記事のタイトル" --description "説明文" --slug my-post --tags "雑記,Astro"
+npm run new-post -- "記事のタイトル" "説明文"
 ```
+
+ファイル名やタグまで指定したいときは、**npm を挟まず** `node` で直に呼びます。
+
+```
+node scripts/new-post.mjs --title "記事のタイトル" --description "説明文" --slug my-post --tags "雑記,Astro"
+```
+
+> **PowerShell での注意**
+> `npm run new-post -- --title "…"` と書くと、npm が `--title` などのオプション名を
+> 自分のものとして取り込んでしまい、値だけがスクリプトに渡ります。
+> オプションを使うときは上のように `node` で直に呼ぶか、`--` を引用符でくくって
+> `npm run new-post '--' --title "…"` としてください。
 
 | オプション | 意味 |
 | --- | --- |

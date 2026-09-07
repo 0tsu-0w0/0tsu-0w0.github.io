@@ -22,8 +22,9 @@ import { DRAFTS_DIR, SLUG_PATTERN, display, fail, isInteractive, quote, today } 
 
 const HELP = `
 使い方:
-  npm run new-post                       対話で作る
-  npm run new-post -- [オプション]        値を渡して作る
+  npm run new-post                          対話で作る（おすすめ）
+  npm run new-post -- "タイトル" "説明"      その場で渡して作る
+  node scripts/new-post.mjs [オプション]     オプションで細かく指定する
 
 オプション:
   --title <文字列>        記事のタイトル
@@ -32,14 +33,20 @@ const HELP = `
   --tags <カンマ区切り>   例: --tags "雑記,Astro"
   --no-open               作ったあと VS Code で開かない
   --help                  この使い方を表示する
+
+PowerShell では npm がオプションを横取りしてしまうため、
+  npm run new-post -- --title "…" --description "…"
+は期待どおりに渡りません。オプションを使うときは node で直に呼ぶか、
+-- を引用符でくくって npm run new-post '--' --title "…" としてください。
 `.trim();
 
 main();
 
 async function main() {
   let args;
+  let positionals;
   try {
-    ({ values: args } = parseArgs({
+    ({ values: args, positionals } = parseArgs({
       options: {
         title: { type: 'string' },
         description: { type: 'string' },
@@ -48,7 +55,9 @@ async function main() {
         'no-open': { type: 'boolean', default: false },
         help: { type: 'boolean', default: false },
       },
-      allowPositionals: false,
+      // "タイトル" "説明" の形でも受け取れるようにする。
+      // PowerShell の npm がオプション名だけを食べてしまった場合の受け皿にもなります。
+      allowPositionals: true,
     }));
   } catch (error) {
     fail(`${error.message}\n\n${HELP}`);
@@ -59,11 +68,21 @@ async function main() {
     return;
   }
 
+  if (positionals.length > 2) {
+    const shown = positionals.map((value) => `"${value}"`).join(' ');
+    fail(`渡された値が多すぎます: ${shown}
+PowerShell では npm が --title などのオプション名だけを取り除いてしまいます。
+オプションを使うときは node で直に呼んでください:
+  node scripts/new-post.mjs --title "タイトル" --description "説明" --slug my-post
+
+${HELP}`);
+  }
+
   const rl = isInteractive() ? createInterface({ input: process.stdin, output: process.stdout }) : null;
 
   try {
-    const title = await resolveTitle(args.title, rl);
-    const description = await resolveDescription(args.description, rl);
+    const title = await resolveTitle(args.title ?? positionals[0], rl);
+    const description = await resolveDescription(args.description ?? positionals[1], rl);
     const slug = await resolveSlug(args.slug, title, rl);
     const tags = await resolveTags(args.tags, rl);
 
