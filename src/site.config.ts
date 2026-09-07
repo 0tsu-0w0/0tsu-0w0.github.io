@@ -125,6 +125,8 @@ export const profile = {
 export const contact = {
   /** 連絡先メールアドレス */
   email: 'otsu.sapphire09@gmail.com',
+  /** Skeb のページ。空文字にするとボタンごと消えます */
+  skeb: 'https://skeb.jp/@_0tmz4_09',
   /** メールソフトを開くときに、あらかじめ入れておく件名 */
   mailSubject: 'ご依頼について',
   /** 受付状況。カードとして横に並びます */

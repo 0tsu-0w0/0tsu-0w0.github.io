@@ -47,12 +47,28 @@ const stateLabels: Record<string, string> = {
 
     {contact.outro.map((paragraph) => <p>{paragraph}</p>)}
 
-    <p class="action">
-      <a class="mail-button" href="/contact/mail/">
+    <div class="action">
+      <a class="button" href="/contact/mail/">
         <Icon name="mail" size={18} />
         メールで連絡する
       </a>
-    </p>
+      {
+        contact.skeb && (
+          <a class="button" href={contact.skeb} target="_blank" rel="noopener noreferrer">
+            <Icon name="external" size={18} />
+            Skeb でリクエストする
+          </a>
+        )
+      }
+    </div>
+    {
+      contact.skeb && (
+        <p class="small muted skeb-note">
+          Skeb は、金額と納期が決まった状態でリクエストを送れるサービスです。
+          やり取りを挟まずに依頼したい場合はこちらが早いです。
+        </p>
+      )
+    }
   </div>
 </BaseLayout>
 
@@ -162,10 +178,17 @@ const stateLabels: Record<string, string> = {
   }
 
   .action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-top: 1.75rem;
   }
 
-  .mail-button {
+  .skeb-note {
+    margin: 0.9rem 0 0;
+  }
+
+  .button {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -178,7 +201,7 @@ const stateLabels: Record<string, string> = {
     font-size: 0.95rem;
   }
 
-  .mail-button:hover {
+  .button:hover {
     border-color: var(--accent);
     color: var(--accent);
   }
